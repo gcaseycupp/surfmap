@@ -1,0 +1,18 @@
+
+# 1 - Get data
+	A. USGS
+		http://waterservices.usgs.gov/nwis/iv/?format=json,1.1&sites=06710247&parameterCd=00060,00065
+	B. NOAA
+	C. Other
+# 2 - Determine Good = Medium- bad ranges. 
+# 3 - Show Points
+# 4 - Show - good bad ranges on points
+# 5 - add Surf/SUP UI
+# 6 - update ranges
+# 7 - Show -good bad ranges for surf/sup points
+# 8 - Predictive...
+	a. Upriver
+	b. Weather
+	c. daily changes (diurnal flows)
+
+
