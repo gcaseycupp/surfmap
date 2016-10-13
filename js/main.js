@@ -25,6 +25,8 @@
      function($, cssStyles, esriTiledLayers, geoJsonLayersFromFile) {
          function buildUpMap() {
 
+
+alert("build map")
              //cssStyles.buildStyles();
 
              var mapDiv = document.getElementById('map');
@@ -102,22 +104,7 @@
                      alert("some error : " + errorThrown);
                  });
 
-                    var blsData = {"seriesid": ['CUUR0000SA0','SUUR0000SA0'],"startyear":"2011", "endyear":"2014"};
-        var jqxhr = $.post("http://api.bls.gov/publicAPI/v2/timeseries/data/",blsData)
-                 .success(function(data) {
-                       alert("in success");
-
-                     var test = data.value;
-                     var test2 = data.value.timeSeries.geoLocation;
-                     var test4 = data.value.timeSeries.geogLocation.latitude;
-                     var test5 = data.timeSeries.values.value.value;
-                    
-
-                  
-                 })
-                 .fail(function(XMLHttpRequest, textStatus, errorThrown) {
-                     alert("some error : " + errorThrown);
-                 });
+      
     
              var jqxhr = $.post("http://waterservices.usgs.gov/nwis/iv/?sites=06710247")
                  // var jqxhr = $.ajax( "http://gcaseycupp.github.io/LeafletTesting2/centralAmericaCapitalsNoVar.geo.json" )
