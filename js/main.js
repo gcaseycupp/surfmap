@@ -26,8 +26,8 @@
          function buildUpMap() {
 
 
-alert("build map")
-             //cssStyles.buildStyles();
+             alert("build map")
+                 //cssStyles.buildStyles();
 
              var mapDiv = document.getElementById('map');
              var map = L.map(mapDiv).setView([20, -90], 3);
@@ -43,23 +43,23 @@ alert("build map")
 
 
 
-            //  var damageAssesmentEsriFeatureLayer = L.esri.featureLayer('http://sampleserver6.arcgisonline.com/arcgis/rest/services/CommercialDamageAssessment/FeatureServer/0', {
-            //      pointToLayer: function(feature, latlng) {
-            //          return L.circleMarker(latlng, cssStyles.damageAssesmentStyleOn);
-            //      }
-            //  }).addTo(map);
+             //  var damageAssesmentEsriFeatureLayer = L.esri.featureLayer('http://sampleserver6.arcgisonline.com/arcgis/rest/services/CommercialDamageAssessment/FeatureServer/0', {
+             //      pointToLayer: function(feature, latlng) {
+             //          return L.circleMarker(latlng, cssStyles.damageAssesmentStyleOn);
+             //      }
+             //  }).addTo(map);
 
 
 
-            // var murderCaseyArcGISOnlineFeatureLayer = L.esri.featureLayer('http://services6.arcgis.com/BImkMn3KePzoClNZ/arcgis/rest/services/murdercities4/FeatureServer/0', {
-            //      pointToLayer: function(feature, latlng) {
-            //          var radius = feature.properties["murdersPer100k"]/3
+             // var murderCaseyArcGISOnlineFeatureLayer = L.esri.featureLayer('http://services6.arcgis.com/BImkMn3KePzoClNZ/arcgis/rest/services/murdercities4/FeatureServer/0', {
+             //      pointToLayer: function(feature, latlng) {
+             //          var radius = feature.properties["murdersPer100k"]/3
 
-            //         var style = cssStyles.murderCaseyArcGISOnlineStyleOn;
-            //         style.radius = radius;
-            //          return L.circleMarker(latlng, style );
-            //      }
-            //  }).addTo(map);
+             //         var style = cssStyles.murderCaseyArcGISOnlineStyleOn;
+             //         style.radius = radius;
+             //          return L.circleMarker(latlng, style );
+             //      }
+             //  }).addTo(map);
 
 
              // var contriesGeoJsonSwitcher = document.getElementById('countriesGeoJson');
@@ -104,96 +104,156 @@ alert("build map")
                      alert("some error : " + errorThrown);
                  });
 
-      
-    
-             var jqxhr = $.post("http://waterservices.usgs.gov/nwis/iv/?sites=06710247")
+
+               alert("start");
+
+
+             var jqxhr = $.get({
+                url:"http://waterservices.usgs.gov/nwis/iv/?sites=06710247",
+                xhrFields: {
+                    withCredentials:true
+                },
                  // var jqxhr = $.ajax( "http://gcaseycupp.github.io/LeafletTesting2/centralAmericaCapitalsNoVar.geo.json" )
-                 .success(function(data) {
-                     //  alert("in success");
+                 success: function(data) {
+                       alert("in success");
 
                      var test = data.value;
                      var test2 = data.value.timeSeries.geoLocation;
                      var test4 = data.value.timeSeries.geogLocation.latitude;
                      var test5 = data.timeSeries.values.value.value;
                      var capitalCities = data;
-                    
-                 })
-                 .fail(function(XMLHttpRequest, textStatus, errorThrown) {
+
+                 },
+                 fail: function(XMLHttpRequest, textStatus, errorThrown) {
                      alert("some error : " + errorThrown);
-                 });
+                 }
+             });
 
 
+ //             makeCorsRequest();
+ //             // Make the actual CORS request.
+ //             function makeCorsRequest() {
+ //                 // This is a sample server that supports CORS.
+ //                 var url = "http://waterservices.usgs.gov/nwis/iv/?sites=06710247";
+
+ //                 var xhr = createCORSRequest('GET', url);
+ //                 if (!xhr) {
+ //                     alert('CORS not supported');
+ //                     return;
+ //                 }
+
+ //                 // Response handlers.
+ //                 xhr.onload = function() {
+ //                     var text = xhr.responseText;
+ //                     var title = getTitle(text);
+ //                     alert('Response from CORS request to ' + url + ': ' + title);
+ //                 };
+
+ //                 xhr.onerror = function() {
+ //                     alert('Woops, there was an error making the request.');
+ //                 };
+
+ //                 xhr.send();
+ //             }
+
+ //             function createCORSRequest(method, url) {
+ //                 alert("in cors func");
+ //                 var xhr = new XMLHttpRequest();
+ //                 if ("withCredentials" in xhr) {
+ //                    alert("iwithCredentials");
+
+ //                     // Check if the XMLHttpRequest object has a "withCredentials" property.
+ //                     // "withCredentials" only exists on XMLHTTPRequest2 objects.
+ //                     xhr.open(method, url, true);
+
+ //                 } else if (typeof XDomainRequest != "undefined") {
+ //                        alert("undefined");
+ //                     // Otherwise, check if XDomainRequest.
+ //                     // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+ //                     xhr = new XDomainRequest();
+ //                     xhr.open(method, url);
+
+ //                 } else {
+ // alert("else");
+ //                     // Otherwise, CORS is not supported by the browser.
+ //                     xhr = null;
+
+ //                 }
+ //                 return xhr;
+ //             }
+
+            
 
 
 
              function addSolrSpatialMarkerswithCluster() {
 
-                     usWellsTeapot100.response.docs.forEach(function(docs) {
-                         var coord = docs.bbox[0];
-                         var lon = coord.substring(7, 17);
-                         var lat = coord.substring(19, 26);
-                         var coords = [];
-                         coords.push(lat);
-                         coords.push(lon);
-                         var title = docs.api_s;
-                         var solrLayer = L.marker(coords);
-                         solrSpatialMarkers.addLayer(solrLayer);
-                     });
+                 usWellsTeapot100.response.docs.forEach(function(docs) {
+                     var coord = docs.bbox[0];
+                     var lon = coord.substring(7, 17);
+                     var lat = coord.substring(19, 26);
+                     var coords = [];
+                     coords.push(lat);
+                     coords.push(lon);
+                     var title = docs.api_s;
+                     var solrLayer = L.marker(coords);
+                     solrSpatialMarkers.addLayer(solrLayer);
+                 });
 
-                     map.addLayer(solrSpatialMarkers);
+                 map.addLayer(solrSpatialMarkers);
 
-                 }
-               
+             }
+
              var solrSpatialMarkers = L.markerClusterGroup();
              addSolrSpatialMarkerswithCluster();
 
 
 
-            //  Only works in IE with following steps..
-            //     #1 - add this to MainAlt NavigatorSearchProxy  -
-            //                <system.webServer>
-            //                <httpProtocol>
-            //                  <customHeaders>
-            //                    <add name="Access-Control-Allow-Origin" value="*" />
-            //                  </customHeaders>
-            //                </httpProtocol>
-            //              </system.webServer>
-            //     # 2  -login to Main Alt Navigator site
-            //     # 3 - Open new IE Tab and open run 
-                
-            //  function addSolrSpatialMarkerswithClusterRest() {
+             //  Only works in IE with following steps..
+             //     #1 - add this to MainAlt NavigatorSearchProxy  -
+             //                <system.webServer>
+             //                <httpProtocol>
+             //                  <customHeaders>
+             //                    <add name="Access-Control-Allow-Origin" value="*" />
+             //                  </customHeaders>
+             //                </httpProtocol>
+             //              </system.webServer>
+             //     # 2  -login to Main Alt Navigator site
+             //     # 3 - Open new IE Tab and open run 
+
+             //  function addSolrSpatialMarkerswithClusterRest() {
 
 
-            //      var jqxhr = $.ajax({
-            //          url: "http://navigatorreleases.petroweb.com/MainAlt/NavigatorSearchProxy/ProxyHandler.ashx/US_Wells?q=chevron&fl=api_s,well_name_s,operator_s,bbox&security.info=true&rows=5000&wt=json",
-            //          xhrFields: {
-            //              withCredentials: true
-            //          },
-            //          success: function(data) {
+             //      var jqxhr = $.ajax({
+             //          url: "http://navigatorreleases.petroweb.com/MainAlt/NavigatorSearchProxy/ProxyHandler.ashx/US_Wells?q=chevron&fl=api_s,well_name_s,operator_s,bbox&security.info=true&rows=5000&wt=json",
+             //          xhrFields: {
+             //              withCredentials: true
+             //          },
+             //          success: function(data) {
 
-            //             data.response.docs.forEach(function(docs) {
-            //                 var coord = docs.bbox[0];
-            //                 var lon = coord.substring(7, 17);
-            //                 var lat = coord.substring(19, 26);
-            //                 var coords = [];
-            //                 coords.push(lat);
-            //                 coords.push(lon);
-            //                 var title = docs.api_s;
-            //                 var solrLayer = L.marker(coords);
-            //                 solrSpatialMarkersClusterRest.addLayer(solrLayer);
-            //             });
+             //             data.response.docs.forEach(function(docs) {
+             //                 var coord = docs.bbox[0];
+             //                 var lon = coord.substring(7, 17);
+             //                 var lat = coord.substring(19, 26);
+             //                 var coords = [];
+             //                 coords.push(lat);
+             //                 coords.push(lon);
+             //                 var title = docs.api_s;
+             //                 var solrLayer = L.marker(coords);
+             //                 solrSpatialMarkersClusterRest.addLayer(solrLayer);
+             //             });
 
-            //             map.addLayer(solrSpatialMarkersClusterRest);
+             //             map.addLayer(solrSpatialMarkersClusterRest);
 
-            //          }
-            //      });
-            //  }
-            // var solrSpatialMarkersClusterRest = L.markerClusterGroup();
-            //  addSolrSpatialMarkerswithClusterRest();
+             //          }
+             //      });
+             //  }
+             // var solrSpatialMarkersClusterRest = L.markerClusterGroup();
+             //  addSolrSpatialMarkerswithClusterRest();
 
 
 
-             
+
 
              function addSolrSpatialMarkersGeoJson() {
 
@@ -214,7 +274,7 @@ alert("build map")
                      map.addLayer(solrSpatialMarkersCircle);
                  });
              }
-      
+
 
 
 
@@ -301,7 +361,7 @@ alert("build map")
                  return false;
              };
 
-           
+
 
              //L.control.layers().addTo(map);
 

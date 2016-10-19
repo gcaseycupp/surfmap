@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+    <style>
+    
+    </style>
+    <meta charset="utf-8">
+    <title>leaflet Test</title>
+   
+   <script   src="http://code.jquery.com/jquery-3.1.1.js"   integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="   crossorigin="anonymous"></script>
+
+
+
+    <!--  -->
+</head>
+
+<body>
+    <div>
+        <text>test</text>
+    </div>
+  
+</body>
+<script type='text/javascript'>
+//alert("startt");
+           $.get({
+                url:"http://waterservices.usgs.gov/nwis/iv/?sites=06710247&format=json",
+               
+                 // var jqxhr = $.ajax( "http://gcaseycupp.github.io/LeafletTesting2/centralAmericaCapitalsNoVar.geo.json" )
+                 success: function(data) {
+                      // alert("in success");
+                    //alert(data);
+                     var test = data.value;
+                     var cfsTimeSeries = data.value.timeSeries[0];
+                     var siteName = cfsTimeSeries.sourceInfo.siteName;
+                     var test2 = cfsTimeSeries.sourceInfo.geoLocation;
+                     var lat = cfsTimeSeries.sourceInfo.geoLocation.latitude;
+                     var cfs = cfsTimeSeries.values[0].value[0].value;
+                     var time = cfsTimeSeries.values[0].value[0].dateTime;
+                     // capitalCities = data;
+
+                 },
+                 fail: function(XMLHttpRequest, textStatus, errorThrown) {
+                     alert("some error : " + errorThrown);
+                 }
+             });
+</script>
+
+</html>
